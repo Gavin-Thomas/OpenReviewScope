@@ -1,0 +1,103 @@
+# AUTOSCOPE Configuration
+# Edit these settings to customize your scoping review workflow
+
+# LLM Model
+model: claude-sonnet-4-5-20250929
+
+# Temperature settings (0.0 = deterministic, 1.0 = creative)
+temperature:
+  screening: 0.1        # Abstract & full-text screening
+  adjudication: 0.0     # Conflict resolution (most deterministic)
+  extraction: 0.1       # Data extraction
+  figures: 0.3          # Figure captions and synthesis
+
+# Random seed for reproducibility
+seed: 42
+
+# Model parameters
+top_p: 1.0
+max_tokens: 4096
+
+# OCR settings
+ocr_enabled: true
+
+# Deduplication thresholds
+dedupe_thresholds:
+  title_similarity: 0.85  # 0.0-1.0, higher = stricter matching
+
+# PDF Fetching Configuration
+pdf_fetch:
+  # Priority order for fetching modes
+  mode_priority:
+    - openurl_browser   # Preferred: headless browser
+    - legacy_api        # Fallback: API-based fetching
+
+  # Concurrency limit for parallel downloads
+  max_concurrency: 4
+
+  # Rate limits per host
+  host_rate_limits:
+    default_rpm: 30  # Requests per minute
+
+  # Retry configuration
+  retries:
+    network:
+      max: 3
+      backoff_seconds: [1, 3, 7]  # Exponential backoff
+    http403_probe: true  # Retry 403s with authentication probe
+
+  # User agent for HTTP requests
+  user_agent: "AutoScopeBot/1.0 (+https://github.com/autoscope)"
+
+  # Campus/institutional access mode
+  campus_mode: auto  # auto | on | off
+
+  # Follow HTML pages to find embedded PDFs
+  accept_html_follow_pdf: true
+
+  # PDF validation rules
+  validate_pdf:
+    check_prolog: true   # Verify %PDF header
+    check_eof: true      # Verify %%EOF trailer
+    min_pages: 1
+
+  # Fuzzy title matching threshold for validation
+  fuzzy_title_match_threshold: 0.72
+
+  # Reuse previously successful fetches
+  reuse_ok_entries: true
+
+  # Output directories
+  logs_dir: outputs/
+  pdfs_dir: pdfs/
+
+# Directory paths
+outputs_dir: outputs/
+cache_dir: glidesr_cache/
+
+# PRISMA-ScR compliance
+prisma_scr_compliance: true
+
+# Export formats
+export:
+  formats:
+    - json
+    - csv
+    - docx
+    - latex
+  include_raw_data: true
+  compress_archive: true  # Create .zip of all outputs
+
+# Logging
+logging:
+  level: info  # debug | info | warn | error
+  audit_trail: true
+  save_prompts: true
+  save_responses: true
+
+# Advanced options
+advanced:
+  parallel_screening: true      # Run 3 agents in parallel
+  auto_adjudication: true       # Escalate ties automatically
+  cache_embeddings: false       # For future similarity search
+  backup_interval_minutes: 30   # Auto-save state every 30min
