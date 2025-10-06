@@ -397,5 +397,3 @@ MIT
 ---
 
 **ReviewScope** - Making scoping reviews faster, more consistent, and reproducible.
-
-Built with [Claude AI](https://www.anthropic.com/)
