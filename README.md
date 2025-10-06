@@ -1,4 +1,4 @@
-# ReviewScope
+# OpenReviewScope
 
 **Automated Scoping Review System** - AI-powered tool for conducting systematic scoping reviews following PRISMA-ScR guidelines.
 
